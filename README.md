@@ -18,4 +18,4 @@ This repository contains all the projects I developed during my academic years a
 
 ## Author
 
-[**Luca Polenta**](https://www.linkedin.com/in/luca-polenta-3847a3218/)
+[**Luca Polenta**](https://www.linkedin.com/in/luca-polenta/)
