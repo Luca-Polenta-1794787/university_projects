@@ -1,0 +1,6 @@
+In order to install the environment you have to execute the command "pip install -e Game/"
+
+cd drl/ai
+git clone https://github.com/openai/mujoco-py.git
+cd mujoco-py
+pip install -e 

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="gl-canvas" width="512" height="512"></canvas>
+
+<p align=center>
+    <button id = "ButtonX">Rotate X</button>
+    <button id = "ButtonY">Rotate Y</button>
+    <button id = "ButtonZ">Rotate Z</button>
+    <button id = "ButtonDirection">Change Direction</button>
+    <button id = "ButtonT">Toggle Rotation Around Barycenter</button>
+</p>
+
+<br>
+
+<p align=center>
+    <div>
+        <p align=center>
+            zNear = 0.1<input id="zNearSlider" type="range"
+            min="0.1" max="1.0" step="0.05" value="0.1" />1.0
+        &emsp;
+        &ensp;
+            zFar = 3.0<input id="zFarSlider" type="range"
+            min="3.0" max="5.0" step="0.05" value="4.0" />5.0
+        </p>
+    </div>
+    <div>
+        <p align=center>
+            Theta = -180<input id="thetaSlider" type="range"
+            min="-180" max="180" step="5" value="0" /> 180
+        &emsp;
+        &ensp;
+            Phi = -180<input id="phiSlider" type="range"
+            min="-180" max="180" step="5" value="0" /> 180
+        </p>
+    </div>
+    <div>
+        <p align=center>
+            Fovy = 12<input id="fovySlider" type="range"
+            min="12" max="100" step="1" value="60.0" /> 100
+        &emsp;
+        &ensp;
+            Aspect = 0.5<input id="aspectSlider" type="range"
+            min="0.5" max="2" step="0.1" value="1" /> 2
+        </p>
+    </div>
+    <div>
+        <p align=center>
+            Radius = 0.1<input id="radiusSlider" type="range"
+            min="0.2" max="4.0" step="0.2" value="0.4" />4.0
+        &emsp;
+        &ensp;
+            <button id = "ButtonReset">Reset Original Values</button>   
+        </p>
+    </div>
+</p>
+
+<br>
+
+<p align=center> 
+    <button id = "ButtonPerVertexPerFragment">Activate Per-Fragment (Deactivating Per-Vertex)</button>
+</p>
+
+<p align=center>
+    <button id = "ButtonRoughTexture">Activate Rough Texture (Deactivating the Tiger Texture)</button>
+</p>
+
+<p align=center> 
+    <button id = "ButtonNeonLight">Activate Neon Light</button>
+</p>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+#version 300 es
+
+precision mediump float;
+
+in vec4 aPosition;
+in vec4 aNormal;
+out vec3 N, L, E, L_Cyl1, L_Cyl2, L_Cyl3, V;
+out vec4 vColor;
+
+////// TEXTURE //////
+in vec2 aTexCoord;
+out vec2 vTexCoord;
+////////////////////
+
+///// ROUGH /////
+in vec4 aTangent;
+uniform bool uRoughTexture;
+/////////////////
+
+uniform mat4 uModelViewMatrix;
+uniform mat4 uProjectionMatrix;
+uniform mat3 uNormalMatrix;
+uniform vec4 uLightPosition;
+uniform vec4 uAmbientProduct;
+uniform vec4 uDiffuseProduct;
+uniform vec4 uSpecularProduct;
+uniform float uShininess;
+uniform bool uPerVertex;
+
+//////// CYLINDER ////////
+uniform bool uNeonLight;
+uniform mat4 uModelViewMatrixCyl;
+uniform mat3 uNormalMatrixCyl;
+uniform vec4 uLightPositionCyl1;
+uniform vec4 uLightPositionCyl2;
+uniform vec4 uLightPositionCyl3;
+uniform vec4 uAmbientProductCyl;
+uniform vec4 uDiffuseProductCyl;
+uniform vec4 uSpecularProductCyl;
+uniform float uShininessCyl;
+//////////////////////////
+
+void main(){
+    // compute vertex and light positions in eye coordinates
+    vec3 pos = (uModelViewMatrix * aPosition).xyz;
+
+    if(uRoughTexture){
+        vec3 eyeLightPos = (uModelViewMatrix * uLightPosition).xyz;
+        
+        vec3 N = normalize(uNormalMatrix * aNormal.xyz);
+        vec3 T = normalize(uNormalMatrix * aTangent.xyz);
+        vec3 B = cross(N, T);
+        
+        if(uLightPositionCyl1.w == 0.0){
+            L.x = dot(T, -pos);
+            L.y = dot(B, -pos);
+            L.z = dot(N, -pos);
+        }else{
+            L.x = dot(T, eyeLightPos-pos);
+            L.y = dot(B, eyeLightPos-pos);
+            L.z = dot(N, eyeLightPos-pos);
+        }
+        L = normalize(L);
+
+        V.x = dot(T, -pos);
+        V.y = dot(B, -pos);
+        V.z = dot(N, -pos);
+
+        V = normalize(V);
+    }else{
+        if(uLightPosition.w == 0.0){
+            L = normalize(uLightPosition.xyz);
+        } else {
+            L = normalize(uLightPosition.xyz - pos); //// So L=(Pl-Po) and then normalized 
+        }
+        if(uNeonLight){
+            if(uLightPositionCyl1.w == 0.0){
+                L_Cyl1 = normalize(uLightPositionCyl1.xyz);
+            } else {
+                L_Cyl1 = normalize(uLightPositionCyl1.xyz - pos); //// So L=(Pl-Po) and then normalized 
+            } 
+            if(uLightPositionCyl2.w == 0.0){
+                L_Cyl2 = normalize(uLightPositionCyl2.xyz);
+            } else {
+                L_Cyl2 = normalize(uLightPositionCyl2.xyz - pos); //// So L=(Pl-Po) and then normalized 
+            } 
+            if(uLightPositionCyl3.w == 0.0){
+                L_Cyl3 = normalize(uLightPositionCyl3.xyz);
+            } else {
+                L_Cyl3 = normalize(uLightPositionCyl3.xyz - pos); //// So L=(Pl-Po) and then normalized 
+            }
+        }
+
+        E = -normalize(pos);
+
+        // transform vertex normal into eye coordinates
+        N = normalize(uNormalMatrix * aNormal.xyz);
+
+        if(uPerVertex){
+            vec3 H = normalize(L + E);
+            vec4 ambient = uAmbientProduct;
+        
+            float Kd = max(dot(L, N), 0.0);
+            vec4 diffuse = Kd*uDiffuseProduct;
+
+            float Ks = pow(max(dot(N, H), 0.0), uShininess);
+            vec4 specular = Ks * uSpecularProduct;
+            if(dot(L, N)<0.0) {
+                specular = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+
+            vColor = ambient + diffuse +specular;
+            vColor.a = 1.0;
+
+            //////// CYLINDER ////////
+            if(uNeonLight){
+                vec4 ambient_Cyl = uAmbientProductCyl;
+
+                vec3 H_Cyl1 = normalize(L_Cyl1 + E);
+                vec3 H_Cyl2 = normalize(L_Cyl2 + E);
+                vec3 H_Cyl3 = normalize(L_Cyl3 + E);
+
+                float Kd_Cyl1 = max(dot(L_Cyl1, N), 0.0);
+                vec4 diffuse_Cyl1 = Kd_Cyl1 * uDiffuseProductCyl;
+                float Kd_Cyl2 = max(dot(L_Cyl2, N), 0.0);
+                vec4 diffuse_Cyl2 = Kd_Cyl2 * uDiffuseProductCyl;
+                float Kd_Cyl3 = max(dot(L_Cyl3, N), 0.0);
+                vec4 diffuse_Cyl3 = Kd_Cyl3 * uDiffuseProductCyl;
+
+                float Ks_Cyl1 = pow(max(dot(N, H_Cyl1), 0.0), uShininessCyl);
+                vec4 specular_Cyl1 = Ks_Cyl1 * uSpecularProductCyl;
+                if(dot(L_Cyl1, N)<0.0) {
+                    specular_Cyl1 = vec4(0.0, 0.0, 0.0, 1.0);
+                }
+                float Ks_Cyl2 = pow(max(dot(N, H_Cyl2), 0.0), uShininessCyl);
+                vec4 specular_Cyl2 = Ks_Cyl2 * uSpecularProductCyl;
+                if(dot(L_Cyl2, N)<0.0) {
+                    specular_Cyl2 = vec4(0.0, 0.0, 0.0, 1.0);
+                }
+                float Ks_Cyl3 = pow(max(dot(N, H_Cyl3), 0.0), uShininessCyl);
+                vec4 specular_Cyl3 = Ks_Cyl3 * uSpecularProductCyl;
+                if(dot(L_Cyl3, N)<0.0) {
+                    specular_Cyl3 = vec4(0.0, 0.0, 0.0, 1.0);
+                }
+
+                vColor += ambient_Cyl +ambient_Cyl +ambient_Cyl + diffuse_Cyl1 +specular_Cyl1 + diffuse_Cyl2 +specular_Cyl2 + diffuse_Cyl3 +specular_Cyl3;
+                vColor.a = 1.0;
+                //////////////////////////
+            }
+        }
+    }
+
+    gl_Position = uProjectionMatrix * uModelViewMatrix * aPosition;
+
+    vTexCoord = aTexCoord; ////// TEXTURE //////
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+#version 300 es
+
+precision mediump float;
+
+uniform vec4 uAmbientProduct;
+uniform vec4 uDiffuseProduct;
+uniform vec4 uSpecularProduct;
+uniform float uShininess;
+uniform bool uPerVertex;
+
+in vec3 N, L, E, L_Cyl1, L_Cyl2, L_Cyl3, V;
+out vec4 fColor;
+in vec4 vColor;
+
+////// TEXTURE //////
+in  vec2 vTexCoord; 
+uniform sampler2D uTextureMap;
+/////////////////////
+
+///// ROUGH /////
+uniform bool uRoughTexture;
+/////////////////
+
+//////// CYLINDER ////////
+uniform bool uNeonLight;
+uniform mat4 uModelViewMatrixCyl;
+uniform mat3 uNormalMatrixCyl;
+uniform float uShininessCyl;
+uniform vec4 uLightPositionCyl1;
+uniform vec4 uLightPositionCyl2;
+uniform vec4 uLightPositionCyl3;
+uniform vec4 uAmbientProductCyl;
+uniform vec4 uDiffuseProductCyl;
+uniform vec4 uSpecularProductCyl;
+//////////////////////////
+
+void main()
+{
+    if(uRoughTexture){
+        vec4 N = texture(uTextureMap, vTexCoord);
+        vec3 NN = normalize(2.0 * N.xyz - 1.0);
+        vec3 LL = normalize(L);
+        float Kd = max(dot(NN, LL), 0.0);
+        fColor = vec4(Kd * uDiffuseProduct.xyz, 1.0);
+    }else if(uPerVertex){
+        fColor = vColor*texture(uTextureMap, vTexCoord);
+    }else{
+        vec3 H = normalize(L + E);
+        vec4 ambient = uAmbientProduct;
+    
+        float Kd = max(dot(L, N), 0.0);
+        vec4 diffuse = Kd*uDiffuseProduct;
+
+        float Ks = pow(max(dot(N, H), 0.0), uShininess);
+        vec4 specular = Ks * uSpecularProduct;
+        if(dot(L, N)<0.0) {
+            specular = vec4(0.0, 0.0, 0.0, 1.0);
+        }
+
+        fColor = ambient + diffuse +specular;
+        fColor.a = 1.0;
+
+        //////// CYLINDER ////////
+        if(uNeonLight){
+            vec4 ambient_Cyl = uAmbientProductCyl;
+
+            vec3 H_Cyl1 = normalize(L_Cyl1 + E);
+            vec3 H_Cyl2 = normalize(L_Cyl2 + E);
+            vec3 H_Cyl3 = normalize(L_Cyl3 + E);
+
+            float Kd_Cyl1 = max(dot(L_Cyl1, N), 0.0);
+            vec4 diffuse_Cyl1 = Kd_Cyl1 * uDiffuseProductCyl;
+            float Kd_Cyl2 = max(dot(L_Cyl2, N), 0.0);
+            vec4 diffuse_Cyl2 = Kd_Cyl2 * uDiffuseProductCyl;
+            float Kd_Cyl3 = max(dot(L_Cyl3, N), 0.0);
+            vec4 diffuse_Cyl3 = Kd_Cyl3 * uDiffuseProductCyl;
+
+            float Ks_Cyl1 = pow(max(dot(N, H_Cyl1), 0.0), uShininessCyl);
+            vec4 specular_Cyl1 = Ks_Cyl1 * uSpecularProductCyl;
+            if(dot(L_Cyl1, N)<0.0) {
+                specular_Cyl1 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl2 = pow(max(dot(N, H_Cyl2), 0.0), uShininessCyl);
+            vec4 specular_Cyl2 = Ks_Cyl2 * uSpecularProductCyl;
+            if(dot(L_Cyl2, N)<0.0) {
+                specular_Cyl2 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl3 = pow(max(dot(N, H_Cyl3), 0.0), uShininessCyl);
+            vec4 specular_Cyl3 = Ks_Cyl3 * uSpecularProductCyl;
+            if(dot(L_Cyl3, N)<0.0) {
+                specular_Cyl3 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+
+            fColor += ambient_Cyl +ambient_Cyl +ambient_Cyl + diffuse_Cyl1 +specular_Cyl1 + diffuse_Cyl2 +specular_Cyl2 + diffuse_Cyl3 +specular_Cyl3;
+            fColor.a = 1.0;
+        }
+        //////////////////////////
+        fColor = fColor*texture(uTextureMap, vTexCoord);
+    }
+}
+</script>
+
+<script id="vertex-shader-Cylinder" type="x-shader/x-vertex">
+#version 300 es
+
+precision mediump float;
+
+in vec4 aPosition;
+in vec4 aNormal;
+out vec3 N, L, E, L_Cyl1, L_Cyl2, L_Cyl3;
+out vec4 vColor;
+
+uniform mat4 uModelViewMatrix;
+uniform mat4 uProjectionMatrix;
+uniform mat3 uNormalMatrix;
+
+uniform bool uPerVertex;
+
+uniform vec4 uLightPosition;
+uniform float uShininess;
+uniform vec4 uAmbientProduct;
+uniform vec4 uDiffuseProduct;
+uniform vec4 uSpecularProduct;
+
+uniform vec4 uLightPositionCyl1;
+uniform vec4 uLightPositionCyl2;
+uniform vec4 uLightPositionCyl3;
+uniform vec4 uAmbientProductCyl;
+uniform vec4 uDiffuseProductCyl;
+uniform vec4 uSpecularProductCyl;
+uniform float uShininessCyl;
+uniform bool uNeonLight;
+uniform vec4 uEmissiveCyl;
+
+void main()
+{
+    vec3 pos = (uModelViewMatrix * aPosition).xyz;
+    E = normalize(-pos);
+    N = normalize(uNormalMatrix*aNormal.xyz);
+    if(uLightPositionCyl1.w == 0.0){
+        L = normalize(uLightPosition.xyz);
+    } else {
+        L = normalize(uLightPosition.xyz - pos); //// So L=(Pl-Po) and then normalized 
+    }
+
+    if(uNeonLight){
+        if(uLightPositionCyl1.w == 0.0){
+            L_Cyl1 = normalize(uLightPositionCyl1.xyz);
+        } else {
+            L_Cyl1 = normalize(uLightPositionCyl1.xyz - pos); //// So L=(Pl-Po) and then normalized 
+        } 
+        if(uLightPositionCyl2.w == 0.0){
+            L_Cyl2 = normalize(uLightPositionCyl2.xyz);
+        } else {
+            L_Cyl2 = normalize(uLightPositionCyl2.xyz - pos); //// So L=(Pl-Po) and then normalized 
+        } 
+        if(uLightPositionCyl3.w == 0.0){
+            L_Cyl3 = normalize(uLightPositionCyl3.xyz);
+        } else {
+            L_Cyl3 = normalize(uLightPositionCyl3.xyz - pos); //// So L=(Pl-Po) and then normalized 
+        }
+    }
+
+    if(uPerVertex){
+        vec3 H = normalize(L + E);
+        vec4 ambient = uAmbientProduct;
+    
+        float Kd = max(dot(L, N), 0.0);
+        vec4 diffuse = Kd*uDiffuseProduct;
+    
+        float Ks = pow(max(dot(N, H), 0.0), uShininess);
+        vec4 specular = Ks * uSpecularProduct;
+        if(dot(L, N)<0.0) {
+            specular = vec4(0.0, 0.0, 0.0, 1.0);
+        }
+    
+        vColor = ambient +diffuse +specular;
+        vColor.a = 0.7;
+
+        //////// CYLINDER ////////
+        if(uNeonLight){
+            vec4 ambient_Cyl = uAmbientProductCyl;
+    
+            vec3 H_Cyl1 = normalize(L_Cyl1 + E);
+            vec3 H_Cyl2 = normalize(L_Cyl2 + E);
+            vec3 H_Cyl3 = normalize(L_Cyl3 + E);
+    
+            float Kd_Cyl1 = max(dot(L_Cyl1, N), 0.0);
+            vec4 diffuse_Cyl1 = Kd_Cyl1 * uDiffuseProductCyl;
+            float Kd_Cyl2 = max(dot(L_Cyl2, N), 0.0);
+            vec4 diffuse_Cyl2 = Kd_Cyl2 * uDiffuseProductCyl;
+            float Kd_Cyl3 = max(dot(L_Cyl3, N), 0.0);
+            vec4 diffuse_Cyl3 = Kd_Cyl3 * uDiffuseProductCyl;
+    
+            float Ks_Cyl1 = pow(max(dot(N, H_Cyl1), 0.0), uShininessCyl);
+            vec4 specular_Cyl1 = Ks_Cyl1 * uSpecularProductCyl;
+            if(dot(L_Cyl1, N)<0.0) {
+                specular_Cyl1 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl2 = pow(max(dot(N, H_Cyl2), 0.0), uShininessCyl);
+            vec4 specular_Cyl2 = Ks_Cyl2 * uSpecularProductCyl;
+            if(dot(L_Cyl2, N)<0.0) {
+                specular_Cyl2 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl3 = pow(max(dot(N, H_Cyl3), 0.0), uShininessCyl);
+            vec4 specular_Cyl3 = Ks_Cyl3 * uSpecularProductCyl;
+            if(dot(L_Cyl3, N)<0.0) {
+                specular_Cyl3 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            
+            vColor += ambient_Cyl +ambient_Cyl +ambient_Cyl + diffuse_Cyl1 +specular_Cyl1 + diffuse_Cyl2 +specular_Cyl2 + diffuse_Cyl3 +specular_Cyl3 + uEmissiveCyl;
+            vColor.a = 0.7;
+        }
+        //////////////////////////
+
+    }
+
+    gl_Position = uProjectionMatrix * uModelViewMatrix * aPosition;
+}
+</script>
+
+<script id="fragment-shader-Cylinder" type="x-shader/x-fragment">
+#version 300 es
+
+precision mediump float;
+
+uniform vec4 uAmbientProduct;
+uniform vec4 uDiffuseProduct;
+uniform vec4 uSpecularProduct;
+uniform float uShininess;
+uniform bool uPerVertex;
+
+in vec3 N, L, E, L_Cyl1, L_Cyl2, L_Cyl3;
+out vec4 fColor;
+in vec4 vColor;
+
+//////// CYLINDER ////////
+uniform bool uNeonLight;
+uniform mat4 uModelViewMatrixCyl;
+uniform mat3 uNormalMatrixCyl;
+uniform vec4 uLightPositionCyl1;
+uniform vec4 uLightPositionCyl2;
+uniform vec4 uLightPositionCyl3;
+uniform vec4 uAmbientProductCyl;
+uniform vec4 uDiffuseProductCyl;
+uniform vec4 uSpecularProductCyl;
+uniform float uShininessCyl;
+uniform vec4 uEmissiveCyl;
+//////////////////////////
+
+void main()
+{
+    if(uPerVertex){
+        fColor = vColor;
+    }else{
+        vec3 H = normalize(L + E);
+        vec4 ambient = uAmbientProduct;
+    
+        float Kd = max(dot(L, N), 0.0);
+        vec4 diffuse = Kd*uDiffuseProduct;
+
+        float Ks = pow(max(dot(N, H), 0.0), uShininess);
+        vec4 specular = Ks * uSpecularProduct;
+
+        if(dot(L, N)<0.0) {
+            specular = vec4(0.0, 0.0, 0.0, 1.0);
+        }
+
+        fColor = ambient + diffuse +specular;
+        fColor.a = 0.7;
+
+        //////// CYLINDER ////////
+        if(uNeonLight){
+            vec4 ambient_Cyl = uAmbientProductCyl;
+
+            vec3 H_Cyl1 = normalize(L_Cyl1 + E);
+            vec3 H_Cyl2 = normalize(L_Cyl2 + E);
+            vec3 H_Cyl3 = normalize(L_Cyl3 + E);
+
+            float Kd_Cyl1 = max(dot(L_Cyl1, N), 0.0);
+            vec4 diffuse_Cyl1 = Kd_Cyl1 * uDiffuseProductCyl;
+            float Kd_Cyl2 = max(dot(L_Cyl2, N), 0.0);
+            vec4 diffuse_Cyl2 = Kd_Cyl2 * uDiffuseProductCyl;
+            float Kd_Cyl3 = max(dot(L_Cyl3, N), 0.0);
+            vec4 diffuse_Cyl3 = Kd_Cyl3 * uDiffuseProductCyl;
+
+            float Ks_Cyl1 = pow(max(dot(N, H_Cyl1), 0.0), uShininessCyl);
+            vec4 specular_Cyl1 = Ks_Cyl1 * uSpecularProductCyl;
+            if(dot(L_Cyl1, N)<0.0) {
+                specular_Cyl1 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl2 = pow(max(dot(N, H_Cyl2), 0.0), uShininessCyl);
+            vec4 specular_Cyl2 = Ks_Cyl2 * uSpecularProductCyl;
+            if(dot(L_Cyl2, N)<0.0) {
+                specular_Cyl2 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+            float Ks_Cyl3 = pow(max(dot(N, H_Cyl3), 0.0), uShininessCyl);
+            vec4 specular_Cyl3 = Ks_Cyl3 * uSpecularProductCyl;
+            if(dot(L_Cyl3, N)<0.0) {
+                specular_Cyl3 = vec4(0.0, 0.0, 0.0, 1.0);
+            }
+
+            fColor += ambient_Cyl +ambient_Cyl +ambient_Cyl + diffuse_Cyl1 +specular_Cyl1 + diffuse_Cyl2 +specular_Cyl2 + diffuse_Cyl3 +specular_Cyl3 + uEmissiveCyl;
+            fColor.a = 0.7;
+        }
+        //////////////////////////
+    }
+}
+</script>
+
+<script src="../Common/initShaders.js"></script>
+<script src="../Common/MVnew.js"></script>
+<script src="geometryCylinder.js"></script>
+<script src="Homework1.js"></script>
+
+</body>
+</html>

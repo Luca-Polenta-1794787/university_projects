@@ -1,0 +1,3 @@
+[ITA] "TrafficSignClassification-43Classes___train.zip" e "TrafficSignClassification-43Classes___test&labels.zip" contengono i file dello stesso dataset e vanno riuniti sotto la stessa cartella "TrafficSignClassification-43Classes" per poter essere utilizzati. 
+
+[ENG] "TrafficSignClassification-43Classes___train.zip" and "TrafficSignClassification-43Classes ___ test & labels.zip" contain the files of the same dataset and must be combined under the same folder "TrafficSignClassification-43Classes" in order to be used.
