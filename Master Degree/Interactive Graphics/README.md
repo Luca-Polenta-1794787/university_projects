@@ -1,5 +1,4 @@
-# university_project---Interactive-Graphics
-Interactive Graphics
+# Interactive Graphics
 
 ## Info
 This project includes two homework assignments focused on building the basics of Computer Graphics such as scene rendering, shading, variable lighting, and animations with WebGL. The final project is instead the expression of a more complex use of webGL programming through the ThreeJS framework. Through it the game "Crossy Road" has been reimplemented in a simplified form. The two homework assignments were carried out independently and delivered during the second semester of the first year of the master's degree, while the project was carried out in a team and delivered at the end of the second semester of the first year of the master's degree.

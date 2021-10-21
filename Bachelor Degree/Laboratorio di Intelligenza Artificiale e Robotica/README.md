@@ -1,5 +1,4 @@
-# university_project---Laboratorio-di-Intelligenza-Artificiale-e-Robotica
-Laboratorio di Intelligenza Artificiale e Robotica
+# Laboratorio di Intelligenza Artificiale e Robotica
 
 ## Info
 [ITA] Questa repository contiene una serie di homework sull'interazione con una base mobile robotica, l'esecuzione di un'attività, l'elaborazione di immagini, la visione artificiale e la pianificazione consegnati durante il secondo semestre del terzo anno della laurea triennale in Ingegneria Informatica.

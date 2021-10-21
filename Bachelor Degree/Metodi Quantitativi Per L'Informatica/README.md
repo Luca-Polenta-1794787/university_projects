@@ -1,5 +1,4 @@
-# university_project---Metodi-Quantitativi-Per-l-Informatica
-Metodi Quantitativi Per l'Informatica
+# Metodi Quantitativi Per l'Informatica
 
 ## Info
 [ITA] Un progetto di Computer Vision in cui due reti neurali vengono addestrate a riconoscere correttamente un'ampia gamma di segnali stradali. Particolare attenzione è stata posta all'analisi e al confronto delle prestazioni temporali in relazione ai risultati ottenuti da una rete pre-addestrata (MobileNetV2) importata da TensorFlow e da una semplice rete neurale convoluzionale sviluppata in completa autonomia. Il progetto è stato consegnato alla fine del secondo semestre del terzo anno della laurea triennale.
