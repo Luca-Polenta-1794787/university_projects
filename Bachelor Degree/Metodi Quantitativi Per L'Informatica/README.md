@@ -7,4 +7,4 @@ NOTICE: all annotations and reports contained in this subrepo are in Italian as 
 [ENG] A Computer Vision project in which two neural networks are trained to correctly recognize a wide range of road signs. Particular attention was paid to the analysis and comparison of temporal performances in relation to the results obtained from a pre-trained network (MobileNetV2) imported from TensorFlow and from a simple convolutional neural network developed in complete autonomy. The project was delivered at the end of the second semester of the third year of the bachelor degree.
 
 
-###[Report](https://github.com/LucPol98/university_projects/blob/main/Bachelor%20Degree/Metodi%20Quantitativi%20Per%20L'Informatica/RelazioneProgetto.pdf).
+#### [Report](https://github.com/LucPol98/university_projects/blob/main/Bachelor%20Degree/Metodi%20Quantitativi%20Per%20L'Informatica/RelazioneProgetto.pdf).
