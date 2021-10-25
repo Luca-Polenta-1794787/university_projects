@@ -1,5 +1,6 @@
 # Linguaggi e Tecnologie Per il Web
 NOTICE: all annotations and reports contained in this sub-repo are in Italian as the course was held in that language.
+NOTICE: The part of the site concerning the interaction with the server is temporarily not working as the server was very simple and designed to work offline
 
 ## Info
 [ITA] Il progetto riguarda la realizzazione di un sito web in cui vengono sfruttate le principali caratteristiche dei linguaggi utilizzati per lo sviluppo web, tra cui HTML, Javascript, CSS, PHP, AJAX e SQL. Inoltre, sono state utilizzate alcune librerie aggiuntive basate su Javascript per gestire il carrello acquisti e per semplificare l'utilizzo di Javascript ad alto livello. Tali librerie sono jQuery e Vue.js . Il progetto è stato consegnato alla fine del secondo semestre del terzo anno della laurea triennale.
