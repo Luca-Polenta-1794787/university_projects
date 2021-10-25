@@ -1,5 +1,5 @@
 # Thesis
-NOTICE: all annotations and reports contained in this sub-repo are in Italian as the course was held in Italian
+NOTICE: all annotations, the report and the thesis itself contained in this sub-repo are in Italian as the course was held in that language.
 
 ## Info
 [ITA] Tesi di laurea triennale. Partendo dalla migliore rete neurale otennuta nel progetto del corso "Metodi Quantitativi per l'Informatica", è stato sviluppato un sistema in grado di identificare e riconoscere la segnaletica stradale rotonda e triangolare. L'identificazione della segnaletica stradale in un'immagine generica ricca di elementi avviene tramite filtri geometrici, mentre il riconoscimento viene effettuato da una rete neurale precedentemente addestrata.
