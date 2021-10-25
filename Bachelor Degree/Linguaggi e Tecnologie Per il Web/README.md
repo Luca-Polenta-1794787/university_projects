@@ -1,5 +1,6 @@
 # Linguaggi e Tecnologie Per il Web
-NOTICE: all annotations and reports contained in this sub-repo are in Italian as the course was held in that language. \n
+NOTICE: all annotations and reports contained in this sub-repo are in Italian as the course was held in that language.
+
 NOTICE: The part of the site concerning the interaction with the server is temporarily not working as the server was very simple and designed to work offline
 
 ## Info
