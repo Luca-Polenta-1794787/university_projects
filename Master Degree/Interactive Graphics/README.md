@@ -9,7 +9,7 @@ This project includes two homework assignments focused on building the basics of
 ### [Click here to play homework n.2](https://lucpol98.github.io/university_projects/Master%20Degree/Interactive%20Graphics/Homework%202/Homework2/Homework2.html).
 #### [Report homework n.2](https://github.com/LucPol98/university_projects/blob/main/Master%20Degree/Interactive%20Graphics/Homework%202/report_HW2.pdf).
 
-### [Click here to see the project](https://lucpol98.github.io/university_projects/Master%20Degree/Interactive%20Graphics/Project/main.html).
+### [Click here to play the project](https://lucpol98.github.io/university_projects/Master%20Degree/Interactive%20Graphics/Project/main.html).
 #### [Report of the project](https://github.com/LucPol98/university_projects/blob/main/Master%20Degree/Interactive%20Graphics/Project/IG_Report_MPPS_team.pdf).
 
 
