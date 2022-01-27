@@ -15,22 +15,22 @@ Both the game and the server will be available in the repo. Tha latter is manage
 
 Login - Sign Up:
 <p align="left">
-<img src="sample_gif/example_login_signup.gif" width="60%"/>
+<img src="sample_gif/example_login_signup.gif" height="50%"/>
 </p>
 
 Quiz:
 <p align="left">
-<img src="sample_gif/example_quiz.gif" width="60%"/>
+<img src="sample_gif/example_quiz.gif" height="50%"/>
 </p>
 
 Shop:
 <p align="left">
-<img src="sample_gif/example_shop.gif" width="60%"/>
+<img src="sample_gif/example_shop.gif" height="50%"/>
 </p>
 
 Game:
 <p align="left">
-<img src="sample_gif/example_game.gif" width="60%"/>
+<img src="sample_gif/example_game.gif" height="50%"/>
 </p>
 
 ## Group members
