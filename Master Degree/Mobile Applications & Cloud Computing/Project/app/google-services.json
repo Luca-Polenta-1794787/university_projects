@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "530759724535",
+    "firebase_url": "https://maccproject-10167-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "maccproject-10167",
+    "storage_bucket": "maccproject-10167.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530759724535:android:7be96e3ef64feb847fd2f2",
+        "android_client_info": {
+          "package_name": "com.example.maccproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530759724535-4fd769fc6dh0lgsahtb6nktso20nuf68.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.maccproject",
+            "certificate_hash": "8e78e44de4ec41da167ba1033ca7f97d68a13d08"
+          }
+        },
+        {
+          "client_id": "530759724535-qd4odl4n9ua6a6tq4ibuntth7vs2af1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnmm0bkkHdzUV6lVrajWpQFLNHllk_NYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530759724535-lr2c47gmm8p5k1t8fr850ro5obpr56cv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

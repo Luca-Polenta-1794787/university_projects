@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/userFragment"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_user" />
+
+    <item
+        android:id="@+id/navigation_quiz"
+        android:icon="@drawable/outline_quiz_black_48"
+        android:title="@string/title_quiz" />
+
+    <item
+        android:id="@+id/navigation_shop"
+        android:icon="@drawable/ic_shopping_basket"
+        android:title="@string/title_shop" />
+
+    <item
+        android:id="@+id/navigation_game"
+        android:icon="@drawable/outline_sports_esports_black_48"
+        android:title="@string/title_game" />
+
+</menu>

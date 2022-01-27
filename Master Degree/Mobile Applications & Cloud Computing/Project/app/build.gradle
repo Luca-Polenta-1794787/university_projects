@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('../maccprojectkey.jks')
+            storePassword 'maccproject'
+            keyAlias 'maccprojectkey'
+            keyPassword 'maccproject'
+        }
+    }
+    compileSdk 31
+
+    dataBinding{
+        enabled = true
+    }
+
+    defaultConfig {
+        applicationId "com.example.maccproject"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    // For firebase auth with email and password
+    implementation 'com.google.firebase:firebase-database:20.0.3'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    // Also declare the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:20.0.1'
+
+    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //GIF
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
+    //Facebook
+    implementation 'com.facebook.android:facebook-login:[8.1)'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+
+    //for the shopping cart
+    implementation 'io.paperdb:paperdb:2.6'
+
+    //reactivity for the shop
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+}

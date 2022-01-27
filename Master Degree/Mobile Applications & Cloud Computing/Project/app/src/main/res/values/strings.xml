@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">MACCproject</string>
+    <string name="title_user">User profile</string>
+    <string name="title_home">Home</string>
+    <string name="title_quiz">Quiz</string>
+    <string name="title_shop">Shop</string>
+    <string name="title_game">Game</string>
+    <string name="play_button">Play!</string>
+    <string name="buttonNextQuiz">Submit</string>
+    <string name="title_quiz_on_progress">May the Force Be with You</string>
+    <string name="register">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="background">background</string>
+    <string name="restartButton">Try again</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="nickname">Nickname</string>
+    <string name="create_act">Create Account</string>
+    <string name="RegisterLink"><b><u>Not a member? Register</u></b></string>
+    <!-- String related to registration page-->
+    <string name="action_register">Sign Up</string>
+    <string name="LoginLink"><b><u>Already a member? Login</u></b></string>
+    <!-- Strings related to forgot password page -->
+    <string name="forgot_password_title"><b>FORGOT PASSWORD PAGE</b></string>
+    <string name="forgot_password_description">Insert your email here and we will send you an email to reset your password</string>
+    <!-- Strings related to the User page -->
+    <string name="signout">Sign Out</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="saveButton">Save Result</string>
+    <string name="showResultString">Show the result!</string>
+    <string name="buttonCreateNewGame">Create a New Game</string>
+    <string name="buttonJoinAGame">Join a Game</string>
+    <string name="shareButton">Share Your Code</string>
+    <string name="update_info">Update your info</string>
+    <string name="buttonStartGame">Start the Game!</string>
+    <string name="labelGame">Game</string>
+    <!-- Strings related to Facebook -->
+    <string name="facebook_app_id">3634103283551655</string>
+    <string name="fb_login_protocol_scheme">fb3634103283551655</string>
+    <string name="welcome_user_text">Welcome Back!</string>
+    <string name="WelcomeBack">Welcome\nBack!</string>
+</resources>
