@@ -3,7 +3,7 @@
 This repository contains all the projects I developed during my academic years at ["Università di Roma, La Sapienza"](https://www.uniroma1.it/it/pagina-strutturale/home).
 
 ## Author
-[**Luca Polenta**](https://www.linkedin.com/in/luca-polenta/)
+[![LinkedIn](https://raw.githubusercontent.com/praveenscience/praveenscience/master/soc/li.svg)](https://www.linkedin.com/in/luca-polenta/)
 
 ## Languages and Tools:
 <p align="center">
