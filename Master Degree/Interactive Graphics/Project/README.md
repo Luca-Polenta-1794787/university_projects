@@ -21,17 +21,17 @@ The proposed project is a re-implementation of the famous "Crossy Road" game. It
 
 Level 1:
 <p align="left">
-<img src="Project/assets/examples/level1.gif" width="60%"/>
+<img src="assets/examples/level1.gif" width="60%"/>
 </p>
 
 Level 2:
 <p align="left">
-<img src="Project/assets/examples/level2.gif" width="60%"/>
+<img src="assets/examples/level2.gif" width="60%"/>
 </p>
 
 Level 3:
 <p align="left">
-<img src="Project/assets/examples/level3.gif" width="60%"/>
+<img src="assets/examples/level3.gif" width="60%"/>
 </p>
 
 ## Report
