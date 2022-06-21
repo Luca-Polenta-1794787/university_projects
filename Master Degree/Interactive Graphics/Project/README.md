@@ -14,6 +14,7 @@ The proposed project is a re-implementation of the famous "Crossy Road" game. It
 - **←**, **↑** and **→** to move the main character in the game (**↓** is disabled because there is no going back);
 
 ## Game Link
+WARNING!!! Due to major changes to how three.js works, the code stopped working properly and was updated to import an older version of the framework in order to continue working. Unfortunately, this has led to general slowdowns in the game experience on some levels and on some browsers that do not reflect the efficient initial programming. From some testing the first level continue to work fine in the Firefox 101.0.1 browser. I apologize for the inconvenience.
 
 ### [Click here to play the project](https://lucpol98.github.io/university_projects/Master%20Degree/Interactive%20Graphics/Project/main.html)
 
