@@ -1,6 +1,6 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
-import {OBJLoader} from 'https://threejs.org/examples/jsm/loaders/OBJLoader.js';
-import {MTLLoader} from 'https://threejs.org/examples/jsm/loaders/MTLLoader.js';
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
+import {OBJLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/OBJLoader.js';
+import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/MTLLoader.js';
 
 import * as OBJECTS from './objects.js'
 import * as GAME from './game.js'

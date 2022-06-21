@@ -1,4 +1,4 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import * as WORLD from './models.js'
 import * as BUNNY from './character_bunny.js'
 import * as BEAR from './character_bear.js'

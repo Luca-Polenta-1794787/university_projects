@@ -1,5 +1,5 @@
-import * as THREE from 'https://threejs.org/build/three.module.js';
-import {GLTFLoader} from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
+import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 
 import * as MODELS from './models.js';
 import * as OBJECTS from './objects.js'
