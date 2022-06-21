@@ -54,17 +54,17 @@ $(document).ready(function() {
 
     $("#easy").click(function(){
         sessionStorage.setItem('levelPass', 'easy');
-        location.href='./game.html'
+        location.href='game.html'
     });
 
     $("#medium").click(function(){
         sessionStorage.setItem('levelPass', 'medium');
-        location.href='./game.html'
+        location.href='game.html'
     });
 
     $("#hard").click(function(){
         sessionStorage.setItem('levelPass', 'hard');
-        location.href='./game.html'
+        location.href='game.html'
     });
 
 });
